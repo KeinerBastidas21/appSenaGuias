@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Listado de Guías{% endblock %}
+{% block content %}
+<h2>Guías de Aprendizaje</h2>
+<table class="table table-bordered" id="tabla_guias">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Programa</th>
+            <th>Instructor</th>
+            <th>Regional</th>
+            <th>Fecha</th>
+            <th>PDF</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for guia in guias %}
+        <tr>
+            <td>{{ guia.nombre }}</td>
+            <td>{{ guia.descripcion }}</td>
+            <td>{{ guia.programa }}</td>
+            <td>{{ guia.instructor.nombre }}</td>
+            <td>{{ guia.instructor.regional }}</td>
+            <td>{{ guia.fecha.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>
+                <a href="{{ url_for('static', filename='uploads/' + guia.archivo_pdf) }}" target="_blank">
+                    📄
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#tabla_guias').DataTable();
+    });
+</script>
+{% endblock %}
